@@ -68,10 +68,16 @@ function makeRealtorsArray() {
     ]
 }
 
-function getFarmHouses(db) {
+function getRealtors(db) {
     return db  
     .select('*')
     .from('realtors')
+}
+
+function getFarmHouses(db) {
+    return db  
+    .select('*')
+    .from('farmhouses')
 }
 
 function cleanTables(db) {
@@ -87,24 +93,28 @@ function cleanTables(db) {
     )
 }
 
-function seedFarmHousesTables(db, farmHouses) {
-    console.log(farmHouses)
-    return db.transaction(async trx => {
-        const realtors = makeRealtorsArray()
+async function seedFarmHousesTable(db) {
+    const farmHouses = helpers.makeFarmHousesArray()
 
-        await trx.into('realtors').insert(realtors)
-        await trx.into('farmhouses').insert(farmHouses)
-        // await trx.raw(
-        //     `SELECT setval('farmhouses_id_seq', ?)`,
-        //     [farmHouses[farmHouses.length - 1].id]
-        // )
-    })
+    await db
+        .into('farmhouses')
+        .insert(farmHouses)
+}
+
+async function seedRealtorsTable(db) {
+    const realtors = helpers.makeRealtorsArray()
+
+    await db
+    .into('realtors')
+    .insert(realtors)
 }
 
 module.exports = {
     makeFarmHousesArray,
     makeRealtorsArray,
+    getRealtors,
     getFarmHouses,
     cleanTables,
-    seedFarmHousesTables
+    seedFarmHousesTable,
+    seedRealtorsTable
 }

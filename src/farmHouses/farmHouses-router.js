@@ -20,10 +20,10 @@ farmHousesRouter
         const newHouse = {
             address: xss(address), 
             description: xss(description), 
-            price: xss(price), 
-            rooms: xss(rooms), 
-            bathrooms: xss(bathrooms), 
-            sizesqft: xss(sizesqft), 
+            price: price, 
+            rooms: rooms, 
+            bathrooms: bathrooms, 
+            sizesqft: sizesqft, 
             realtorid 
         }
 

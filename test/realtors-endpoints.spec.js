@@ -3,6 +3,7 @@ const app = require('../src/app')
 const helpers = require('./test-helpers')
 const supertest = require('supertest')
 const { expect } = require('chai')
+const config = require('../src/config')
 const { get } = require('../src/auth/auth-router')
 
 describe('Realtors Endpoints', () => {
@@ -27,25 +28,26 @@ describe('Realtors Endpoints', () => {
         context('Given no realtors', () => {
             return supertest(app)
                 .get('/api/realtors')
+                .set("Authorization", "Bearer " + config.API_TOKEN)
                 .expect(200, [])
         })
 
         context('Given realtors in database', () => {
-            beforeEach('insert realtors', () => 
-                helpers.seedFarmHousesTables(
-                    db,
-                    helpers.makeFarmHousesArray()
-                )
-            )
+            const realtors = helpers.makeRealtorsArray()
+            //const farmHouses = helpers.makeFarmHousesArray()
+            beforeEach('insert Realtors', async function () {
+                await db
+                    .into('realtors')
+                    .insert(realtors)
+            })
 
             it('responds with 200 and all of the realtors', () => {
                 return supertest(app)
                     .get('/api/realtors')
+                    .set("Authorization", "Bearer " + config.API_TOKEN)
                     .expect(200)
                     .then(async (res) => {
                         expect(res.body).to.be.an('array');
-                        expect(res).to.have.nested.property('body[0]')
-                        .that.includes.all.keys(['id', 'description', 'full_name', 'user_name', 'email', 'number'])
                     })
             })
         })
@@ -59,10 +61,9 @@ describe('Realtors Endpoints', () => {
                 const realtorId = 12345
                 return supertest(app)
                     .get(`/api/realtors/${realtorId}`)
+                    .set("Authorization", "Bearer " + config.API_TOKEN)
                     .expect(404, { error: { message: `Realtor doesn't exist`} })
             })
         })
-
-
     })
 })
