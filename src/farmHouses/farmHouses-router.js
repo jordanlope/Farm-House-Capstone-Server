@@ -16,7 +16,7 @@ farmHousesRouter
     })
     .post(jsonParser, (req, res, next) => {
         const { address, description, price, rooms, bathrooms, sizesqft, realtorid } = req.body
-        
+
         const newHouse = {
             address: xss(address), 
             description: xss(description), 
