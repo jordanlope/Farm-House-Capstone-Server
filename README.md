@@ -10,7 +10,7 @@ If you want a beautiful Farm House with views, barn animals, and quality soil th
 ***
 
 Technologies used:
-JS, Node.js, express, knex, SQL
+React, CSS, Node, Express, and PostgreSQL
 
 Testing Technologies:
 mocha, chai
