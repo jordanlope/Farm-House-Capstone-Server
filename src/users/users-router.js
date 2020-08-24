@@ -23,7 +23,9 @@ usersRouter
         if (hasUserWithUserName)
           return res.status(400).json({ error: `Username already taken` })
 
-        console.log('Has user already: ', hasUserWithUserName)
+        const checkPassword = UsersService.validatePassword(password)
+        if(checkPassword)
+          return res.status(401).json({ error: 'Password invalid' })
 
         return UsersService.hashPassword(password)
           .then(hashedPassword => {
