@@ -20,7 +20,6 @@ const FarmHousesService = {
                             'full_name', usr.full_name,
                             'email', usr.email,
                             'user_name', usr.user_name,
-                            'number', usr.number,
                             'description', usr.description
                         )
                     ) AS "realtor"`
@@ -79,7 +78,6 @@ const FarmHousesService = {
                 full_name: xss(realtor.full_name),
                 user_name: xss(realtor.user_name),
                 email: xss(realtor.email),
-                number: realtor.number,
                 description: xss(realtor.description)
             },
         }

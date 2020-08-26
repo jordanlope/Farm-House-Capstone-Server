@@ -40,7 +40,6 @@ authRouter
                 full_name: dbUser.full_name,
                 user_name: dbUser.user_name,
                 email: dbUser.email,
-                number: dbUser.number,
                 description: dbUser.description
               },
             })

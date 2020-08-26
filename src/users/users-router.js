@@ -8,9 +8,9 @@ const jsonBodyParser = express.json()
 
 usersRouter
   .post('/', jsonBodyParser, (req, res, next) => {
-    const { password = '', user_name = '', number = '', full_name = '', email = '', description = '' } = req.body
+    const { password = '', user_name = '', full_name = '', email = '', description = '' } = req.body
 
-    for (const field of ['full_name', 'user_name', 'password', 'email', 'number', 'description'])
+    for (const field of ['full_name', 'user_name', 'password', 'email', 'description'])
       if (!req.body[field])
         return res.status(400).json({
           error: `Missing '${field}' in request body`
@@ -34,7 +34,6 @@ usersRouter
               password: hashedPassword,
               full_name,
               email,
-              number, 
               description
             }
             console.log('Hashed', hashedPassword)
